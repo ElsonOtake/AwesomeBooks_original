@@ -7,17 +7,15 @@ const menuAddNew = document.querySelector('.menu_add_new');
 const menuContact = document.querySelector('.menu_contact');
 const contact = document.querySelector('.contact');
 const addNew = document.querySelector('.add_new');
+const currentdate = document.querySelector('.currentdate');
 
-const d = new Date();
-document.querySelector('.currentdate').innerHTML = d;
-
-const bookAwesome = {
+const storage = {
   title: '',
   author: '',
   bookList: [],
 };
 
-class Awesome {
+class Books {
   constructor() {
     this.books = [];
   }
@@ -27,7 +25,7 @@ class Awesome {
   }
 
   remove(tit, aut) {
-    this.books = this.books.filter((book) => {
+    this.books = this.books.filter(book => {
       if ((book.title === tit) && (book.author === aut)) {
         return false;
       }
@@ -48,13 +46,13 @@ class Awesome {
   }
 }
 
-const awesomeBooks = new Awesome();
+const awesome = new Books();
 
 function populateStorage() {
-  bookAwesome.title = inputTitle.value;
-  bookAwesome.author = inputName.value;
-  bookAwesome.bookList = awesomeBooks.books;
-  const storeData = JSON.stringify(bookAwesome);
+  storage.title = inputTitle.value;
+  storage.author = inputName.value;
+  storage.bookList = awesome.books;
+  const storeData = JSON.stringify(storage);
   localStorage.setItem('data', storeData);
 }
 
@@ -72,20 +70,20 @@ function dynamicLoad() {
   h1.innerText = 'All awesome books';
   wrapper.appendChild(h1);
 
-  for (let i = 0; i < awesomeBooks.size(); i += 1) {
+  for (let i = 0; i < awesome.size(); i += 1) {
     const div = document.createElement('div');
     div.className = 'outputcard';
     const p0 = document.createElement('p');
     p0.className = 'list-books';
-    p0.innerText = `"${awesomeBooks.nthTitle(i)}" by ${awesomeBooks.nthAuthor(i)}`;
+    p0.innerText = `"${awesome.nthTitle(i)}" by ${awesome.nthAuthor(i)}`;
     div.appendChild(p0);
     const p1 = document.createElement('p');
     p1.className = `book-title_${i}`;
-    p1.innerText = awesomeBooks.nthTitle(i);
+    p1.innerText = awesome.nthTitle(i);
     div.appendChild(p1);
     const p2 = document.createElement('p');
     p2.className = `author-name_${i}`;
-    p2.innerText = awesomeBooks.nthAuthor(i);
+    p2.innerText = awesome.nthAuthor(i);
     div.appendChild(p2);
     const button = document.createElement('button');
     button.className = `remove_btn_${i} remove_btn`;
@@ -97,10 +95,10 @@ function dynamicLoad() {
   currentdate.insertAdjacentElement('afterend', wrapper);
   const removeButton = document.querySelectorAll('.remove_btn');
 
-  removeButton.forEach((btn) => btn.addEventListener('click', (e) => {
+  removeButton.forEach((btn) => btn.addEventListener('click', e => {
     const title = document.querySelector(`.book-title_${e.target.classList[0].substr(11)}`);
     const author = document.querySelector(`.author-name_${e.target.classList[0].substr(11)}`);
-    awesomeBooks.remove(title.innerText, author.innerText);
+    awesome.remove(title.innerText, author.innerText);
     populateStorage();
     dynamicLoad();
   }));
@@ -122,7 +120,7 @@ function dynamicLoad() {
 }
 
 newBook.addEventListener('click', () => {
-  awesomeBooks.add(inputTitle.value, inputName.value);
+  awesome.add(inputTitle.value, inputName.value);
   inputTitle.value = '';
   inputName.value = '';
   populateStorage();
@@ -132,7 +130,7 @@ function populateBookForm() {
   const currentBook = JSON.parse(localStorage.getItem('data'));
   inputTitle.value = currentBook.title;
   inputName.value = currentBook.author;
-  awesomeBooks.books = currentBook.bookList;
+  awesome.books = currentBook.bookList;
 }
 
 inputTitle.addEventListener('input', () => {
@@ -183,3 +181,6 @@ if (!localStorage.getItem('data')) {
 }
 
 dynamicLoad();
+
+currentdate.innerHTML = new Date();
+setInterval(() => currentdate.innerText = new Date(), 1000);
