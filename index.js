@@ -1,18 +1,17 @@
 const inputTitle = document.getElementById('title');
 const inputName = document.getElementById('name');
 const body = document.querySelector('body');
-const newBook = document.querySelector('.new_book');
+const newBookBtn = document.querySelector('.new_book_btn');
 const menuList = document.querySelector('.menu_list');
 const menuAddNew = document.querySelector('.menu_add_new');
 const menuContact = document.querySelector('.menu_contact');
 const contact = document.querySelector('.contact');
 const addNew = document.querySelector('.add_new');
-const currentdate = document.querySelector('.currentdate');
+const dateTime = document.querySelector('.date_time');
 
-const storage = {
+const formStorage = {
   title: '',
   author: '',
-  bookList: [],
 };
 
 class Books {
@@ -22,15 +21,18 @@ class Books {
 
   add(tit, aut) {
     this.books.push({ title: tit, author: aut });
+    localStorage.setItem('classData', JSON.stringify(this.books));
   }
 
   remove(tit, aut) {
     this.books = this.books.filter(book => {
       if ((book.title === tit) && (book.author === aut)) {
         return false;
+      } else {
+        return true;
       }
-      return true;
     });
+    localStorage.setItem('classData', JSON.stringify(this.books));
   }
 
   size() {
@@ -44,62 +46,56 @@ class Books {
   nthAuthor(num) {
     return this.books[num].author;
   }
+
+  restoreStorage() {
+    this.books = JSON.parse(localStorage.getItem('classData'));
+    
+  }
 }
 
 const awesome = new Books();
 
 function populateStorage() {
-  storage.title = inputTitle.value;
-  storage.author = inputName.value;
-  storage.bookList = awesome.books;
-  const storeData = JSON.stringify(storage);
+  formStorage.title = inputTitle.value;
+  formStorage.author = inputName.value;
+  const storeData = JSON.stringify(formStorage);
   localStorage.setItem('data', storeData);
 }
 
 function dynamicLoad() {
-  const currentdate = document.querySelector('.currentdate');
 
-  if (document.querySelector('.book_wrapper')) {
-    body.removeChild(document.querySelector('.book_wrapper'));
+  if (document.querySelector('.list')) {
+    body.removeChild(document.querySelector('.list'));
   }
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'book_wrapper';
-  wrapper.id = 'list';
+  const list = document.createElement('div');
+  list.className = 'list';
   const h1 = document.createElement('h1');
   h1.innerText = 'All awesome books';
-  wrapper.appendChild(h1);
+  list.appendChild(h1);
 
   for (let i = 0; i < awesome.size(); i += 1) {
     const div = document.createElement('div');
-    div.className = 'outputcard';
-    const p0 = document.createElement('p');
-    p0.className = 'list-books';
-    p0.innerText = `"${awesome.nthTitle(i)}" by ${awesome.nthAuthor(i)}`;
-    div.appendChild(p0);
-    const p1 = document.createElement('p');
-    p1.className = `book-title_${i}`;
-    p1.innerText = awesome.nthTitle(i);
-    div.appendChild(p1);
-    const p2 = document.createElement('p');
-    p2.className = `author-name_${i}`;
-    p2.innerText = awesome.nthAuthor(i);
-    div.appendChild(p2);
+    div.className = 'book_line';
+    const p = document.createElement('p');
+    p.className = 'book_detail';
+    p.innerText = `"${awesome.nthTitle(i)}" by ${awesome.nthAuthor(i)}`;
+    div.appendChild(p);
     const button = document.createElement('button');
-    button.className = `remove_btn_${i} remove_btn`;
+    button.className = 'remove_btn';
     button.type = 'button';
     button.innerText = 'Remove';
     div.appendChild(button);
-    wrapper.appendChild(div);
+    list.appendChild(div);
   }
-  currentdate.insertAdjacentElement('afterend', wrapper);
+  dateTime.insertAdjacentElement('afterend', list);
   const removeButton = document.querySelectorAll('.remove_btn');
 
   removeButton.forEach((btn) => btn.addEventListener('click', e => {
-    const title = document.querySelector(`.book-title_${e.target.classList[0].substr(11)}`);
-    const author = document.querySelector(`.author-name_${e.target.classList[0].substr(11)}`);
-    awesome.remove(title.innerText, author.innerText);
-    populateStorage();
+    let titleByAuthor = e.target.previousSibling.innerText;
+    let title = titleByAuthor.slice(1, titleByAuthor.indexOf('" by '));
+    let author = titleByAuthor.slice(titleByAuthor.indexOf('" by ') + 5);
+    awesome.remove(title, author);
     dynamicLoad();
   }));
 
@@ -119,27 +115,23 @@ function dynamicLoad() {
   });
 }
 
-newBook.addEventListener('click', () => {
+newBookBtn.addEventListener('click', () => {
   awesome.add(inputTitle.value, inputName.value);
   inputTitle.value = '';
   inputName.value = '';
   populateStorage();
 });
 
-function populateBookForm() {
-  const currentBook = JSON.parse(localStorage.getItem('data'));
-  inputTitle.value = currentBook.title;
-  inputName.value = currentBook.author;
-  awesome.books = currentBook.bookList;
+function populateNewForm() {
+  const storeData = JSON.parse(localStorage.getItem('data'));
+  inputTitle.value = storeData.title;
+  inputName.value = storeData.author;
+  // awesome.books = currentBook.list;
 }
 
-inputTitle.addEventListener('input', () => {
-  populateStorage();
-});
+inputTitle.addEventListener('input', () => populateStorage());
 
-inputName.addEventListener('input', () => {
-  populateStorage();
-});
+inputName.addEventListener('input', () => populateStorage());
 
 menuAddNew.addEventListener('click', () => {
   if (!menuAddNew.classList.contains('active')) {
@@ -147,7 +139,7 @@ menuAddNew.addEventListener('click', () => {
   }
   menuList.classList.remove('active');
   menuContact.classList.remove('active');
-  const bookWrapper = document.querySelector('.book_wrapper');
+  const bookWrapper = document.querySelector('.list');
   addNew.classList.remove('inactive');
 
   if (!contact.classList.contains('inactive')) {
@@ -164,7 +156,7 @@ menuContact.addEventListener('click', () => {
   }
   menuList.classList.remove('active');
   menuAddNew.classList.remove('active');
-  const bookWrapper = document.querySelector('.book_wrapper');
+  const bookWrapper = document.querySelector('.list');
   contact.classList.remove('inactive');
   if (!addNew.classList.contains('inactive')) {
     addNew.classList.add('inactive');
@@ -177,10 +169,14 @@ menuContact.addEventListener('click', () => {
 if (!localStorage.getItem('data')) {
   populateStorage();
 } else {
-  populateBookForm();
+  populateNewForm();
+}
+
+if (localStorage.getItem('classData')) {
+  awesome.restoreStorage();
 }
 
 dynamicLoad();
 
-currentdate.innerHTML = new Date();
-setInterval(() => currentdate.innerText = new Date(), 1000);
+dateTime.innerHTML = new Date();
+// setInterval(() => dateTime.innerText = new Date(), 1000);

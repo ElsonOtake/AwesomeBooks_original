@@ -39,14 +39,14 @@ header li:nth-child(3).active {
   color: red;
 }
 
-.currentdate {
+.date_time {
   text-align: right;
   margin: auto;
   width: 80%;
   padding-top: 10px;
 }
 
-.book_wrapper {
+.list {
   display: flex;
   flex-direction: column;
   margin: 20px auto 0;
@@ -56,13 +56,13 @@ header li:nth-child(3).active {
   border: 2px solid black;
 }
 
-.book_wrapper h1 {
+.list h1 {
   font-size: 24px;
   padding: 10px 0;
   margin: 20px 0;
 }
 
-.outputcard {
+.book_line {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,7 +72,7 @@ header li:nth-child(3).active {
   width: 100%;
 }
 
-.list-books {
+.book_detail {
   display: flex;
   flex-wrap: wrap;
   text-align: left;
@@ -85,13 +85,13 @@ form button {
   margin-right: 20%;
 }
 
-.outputcard button {
+.book_line button {
   background-color: rgb(108, 126, 126);
   height: min-content;
   margin-right: 20px;
 }
 
-.outputcard:nth-of-type(odd) {
+.book_line:nth-of-type(odd) {
   background-color: rgb(206, 225, 225);
 }
 
@@ -102,11 +102,6 @@ form h2 {
 form input {
   width: 60%;
   margin: auto;
-}
-
-p[class^="book-title_"],
-p[class^="author-name_"] {
-  display: none;
 }
 
 form {
@@ -142,7 +137,7 @@ footer p {
   padding-left: 20px;
 }
 
-.book_wrapper.inactive {
+.list.inactive {
   display: none;
 }
 
