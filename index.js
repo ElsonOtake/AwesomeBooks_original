@@ -1,3 +1,5 @@
+import Books from "./modules/Books.js";
+
 const body = document.querySelector('body');
 const dateTime = document.querySelector('.date_time');
 const menuList = document.querySelector('.menu_list');
@@ -14,44 +16,6 @@ const formStorage = {
   author: '',
 };
 
-class Books {
-  constructor() {
-    this.books = [];
-  }
-
-  add(tit, aut) {
-    this.books.push({ title: tit, author: aut });
-    localStorage.setItem('classData', JSON.stringify(this.books));
-  }
-
-  remove(tit, aut) {
-    this.books = this.books.filter((book) => {
-      // if ((book.title === tit) && (book.author === aut)) {
-      //   return false;
-      // }
-      // return true;
-      return ((book.title === tit) && (book.author === aut)) ? false : true;
-    });
-    localStorage.setItem('classData', JSON.stringify(this.books));
-  }
-
-  size() {
-    return this.books.length;
-  }
-
-  nthTitle(num) {
-    return this.books[num].title;
-  }
-
-  nthAuthor(num) {
-    return this.books[num].author;
-  }
-
-  restoreStorage() {
-    this.books = JSON.parse(localStorage.getItem('classData'));
-  }
-}
-
 const awesome = new Books();
 
 function populateStorage() {
@@ -62,9 +26,6 @@ function populateStorage() {
 }
 
 function dynamicLoad() {
-  // if (document.querySelector('.list')) {
-  //   body.removeChild(document.querySelector('.list'));
-  // }
   (document.querySelector('.list')) && body.removeChild(document.querySelector('.list'));
 
   const list = document.createElement('div');
@@ -145,22 +106,11 @@ menuContact.addEventListener('click', () => {
   menuContact.classList.add('active');
 });
 
-// if (!localStorage.getItem('data')) {
-//   populateStorage();
-// } else {
-//   populateNewForm();
-// }
-
 (!localStorage.getItem('data')) ? populateStorage() : populateNewForm();
-
-// if (localStorage.getItem('classData')) {
-//   awesome.restoreStorage();
-// }
 
 (localStorage.getItem('classData')) && awesome.restoreStorage();
 
 dynamicLoad();
 
 import { DateTime } from "./modules/luxon.js";
-dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
 setInterval(() => dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS), 1000);
