@@ -1,4 +1,6 @@
 body {
+  margin: 0;
+  padding: 0;
   text-align: center;
   box-sizing: border-box;
 }
@@ -18,7 +20,7 @@ header p {
 header ul {
   list-style: none;
   margin: 0;
-  padding: 0 20px 0 0;
+  padding-right: 20px;
   display: flex;
   align-items: center;
 }
@@ -44,6 +46,7 @@ header li:nth-child(3).active {
   margin: auto;
   width: 80%;
   padding-top: 10px;
+  padding-right: 20px;
 }
 
 .list {
@@ -62,7 +65,7 @@ header li:nth-child(3).active {
   margin: 20px 0;
 }
 
-.book_line {
+.list .book_line {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,7 +75,7 @@ header li:nth-child(3).active {
   width: 100%;
 }
 
-.book_detail {
+.list .book_detail {
   display: flex;
   flex-wrap: wrap;
   text-align: left;
@@ -85,13 +88,13 @@ form button {
   margin-right: 20%;
 }
 
-.book_line button {
+.list .book_line button {
   background-color: rgb(108, 126, 126);
   height: min-content;
   margin-right: 20px;
 }
 
-.book_line:nth-of-type(odd) {
+.list .book_line:nth-of-type(odd) {
   background-color: rgb(206, 225, 225);
 }
 

@@ -26,10 +26,11 @@ class Books {
 
   remove(tit, aut) {
     this.books = this.books.filter((book) => {
-      if ((book.title === tit) && (book.author === aut)) {
-        return false;
-      }
-      return true;
+      // if ((book.title === tit) && (book.author === aut)) {
+      //   return false;
+      // }
+      // return true;
+      return ((book.title === tit) && (book.author === aut)) ? false : true;
     });
     localStorage.setItem('classData', JSON.stringify(this.books));
   }
@@ -61,9 +62,10 @@ function populateStorage() {
 }
 
 function dynamicLoad() {
-  if (document.querySelector('.list')) {
-    body.removeChild(document.querySelector('.list'));
-  }
+  // if (document.querySelector('.list')) {
+  //   body.removeChild(document.querySelector('.list'));
+  // }
+  (document.querySelector('.list')) && body.removeChild(document.querySelector('.list'));
 
   const list = document.createElement('div');
   list.className = 'list';
@@ -90,8 +92,8 @@ function dynamicLoad() {
 
   removeButton.forEach((btn) => btn.addEventListener('click', (e) => {
     const titleByAuthor = e.target.previousSibling.innerText;
-    const title = titleByAuthor.slice(1, titleByAuthor.indexOf('" by '));
-    const author = titleByAuthor.slice(titleByAuthor.indexOf('" by ') + 5);
+    const title = titleByAuthor.slice(1, titleByAuthor.lastIndexOf('" by '));
+    const author = titleByAuthor.slice(titleByAuthor.lastIndexOf('" by ') + 5);
     awesome.remove(title, author);
     dynamicLoad();
   }));
@@ -143,17 +145,22 @@ menuContact.addEventListener('click', () => {
   menuContact.classList.add('active');
 });
 
-if (!localStorage.getItem('data')) {
-  populateStorage();
-} else {
-  populateNewForm();
-}
+// if (!localStorage.getItem('data')) {
+//   populateStorage();
+// } else {
+//   populateNewForm();
+// }
 
-if (localStorage.getItem('classData')) {
-  awesome.restoreStorage();
-}
+(!localStorage.getItem('data')) ? populateStorage() : populateNewForm();
+
+// if (localStorage.getItem('classData')) {
+//   awesome.restoreStorage();
+// }
+
+(localStorage.getItem('classData')) && awesome.restoreStorage();
 
 dynamicLoad();
 
-dateTime.innerHTML = new Date();
-// setInterval(() => dateTime.innerText = new Date(), 1000);
+import { DateTime } from "./modules/luxon.js";
+dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+setInterval(() => dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS), 1000);
