@@ -25,12 +25,11 @@ class Books {
   }
 
   remove(tit, aut) {
-    this.books = this.books.filter(book => {
+    this.books = this.books.filter((book) => {
       if ((book.title === tit) && (book.author === aut)) {
         return false;
-      } else {
-        return true;
       }
+      return true;
     });
     localStorage.setItem('classData', JSON.stringify(this.books));
   }
@@ -49,7 +48,6 @@ class Books {
 
   restoreStorage() {
     this.books = JSON.parse(localStorage.getItem('classData'));
-    
   }
 }
 
@@ -63,7 +61,6 @@ function populateStorage() {
 }
 
 function dynamicLoad() {
-
   if (document.querySelector('.list')) {
     body.removeChild(document.querySelector('.list'));
   }
@@ -91,10 +88,10 @@ function dynamicLoad() {
   dateTime.insertAdjacentElement('afterend', list);
   const removeButton = document.querySelectorAll('.remove_btn');
 
-  removeButton.forEach((btn) => btn.addEventListener('click', e => {
-    let titleByAuthor = e.target.previousSibling.innerText;
-    let title = titleByAuthor.slice(1, titleByAuthor.indexOf('" by '));
-    let author = titleByAuthor.slice(titleByAuthor.indexOf('" by ') + 5);
+  removeButton.forEach((btn) => btn.addEventListener('click', (e) => {
+    const titleByAuthor = e.target.previousSibling.innerText;
+    const title = titleByAuthor.slice(1, titleByAuthor.indexOf('" by '));
+    const author = titleByAuthor.slice(titleByAuthor.indexOf('" by ') + 5);
     awesome.remove(title, author);
     dynamicLoad();
   }));
