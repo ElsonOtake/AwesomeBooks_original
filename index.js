@@ -1,13 +1,13 @@
+const body = document.querySelector('body');
+const dateTime = document.querySelector('.date_time');
+const menuList = document.querySelector('.menu_list');
+const addNew = document.querySelector('.add_new');
+const menuAddNew = document.querySelector('.menu_add_new');
 const inputTitle = document.getElementById('title');
 const inputName = document.getElementById('name');
-const body = document.querySelector('body');
 const newBookBtn = document.querySelector('.new_book_btn');
-const menuList = document.querySelector('.menu_list');
-const menuAddNew = document.querySelector('.menu_add_new');
-const menuContact = document.querySelector('.menu_contact');
 const contact = document.querySelector('.contact');
-const addNew = document.querySelector('.add_new');
-const dateTime = document.querySelector('.date_time');
+const menuContact = document.querySelector('.menu_contact');
 
 const formStorage = {
   title: '',
@@ -100,18 +100,12 @@ function dynamicLoad() {
   }));
 
   menuList.addEventListener('click', () => {
-    if (!menuList.classList.contains('active')) {
-      menuList.classList.add('active');
-    }
-    menuAddNew.classList.remove('active');
-    menuContact.classList.remove('active');
     dynamicLoad();
-    if (!addNew.classList.contains('inactive')) {
-      addNew.classList.add('inactive');
-    }
-    if (!contact.classList.contains('inactive')) {
-      contact.classList.add('inactive');
-    }
+    menuList.classList.add('active');
+    addNew.classList.add('inactive');
+    menuAddNew.classList.remove('active');
+    contact.classList.add('inactive');
+    menuContact.classList.remove('active');
   });
 }
 
@@ -126,7 +120,6 @@ function populateNewForm() {
   const storeData = JSON.parse(localStorage.getItem('data'));
   inputTitle.value = storeData.title;
   inputName.value = storeData.author;
-  // awesome.books = currentBook.list;
 }
 
 inputTitle.addEventListener('input', () => populateStorage());
@@ -134,36 +127,23 @@ inputTitle.addEventListener('input', () => populateStorage());
 inputName.addEventListener('input', () => populateStorage());
 
 menuAddNew.addEventListener('click', () => {
-  if (!menuAddNew.classList.contains('active')) {
-    menuAddNew.classList.add('active');
-  }
+  const list = document.querySelector('.list');
+  list.classList.add('inactive');
   menuList.classList.remove('active');
-  menuContact.classList.remove('active');
-  const bookWrapper = document.querySelector('.list');
   addNew.classList.remove('inactive');
-
-  if (!contact.classList.contains('inactive')) {
-    contact.classList.add('inactive');
-  }
-  if (!bookWrapper.classList.contains('inactive')) {
-    bookWrapper.classList.add('inactive');
-  }
+  menuAddNew.classList.add('active');
+  contact.classList.add('inactive');
+  menuContact.classList.remove('active');
 });
 
 menuContact.addEventListener('click', () => {
-  if (!menuContact.classList.contains('active')) {
-    menuContact.classList.add('active');
-  }
+  const list = document.querySelector('.list');
+  list.classList.add('inactive');
   menuList.classList.remove('active');
+  addNew.classList.add('inactive');
   menuAddNew.classList.remove('active');
-  const bookWrapper = document.querySelector('.list');
   contact.classList.remove('inactive');
-  if (!addNew.classList.contains('inactive')) {
-    addNew.classList.add('inactive');
-  }
-  if (!bookWrapper.classList.contains('inactive')) {
-    bookWrapper.classList.add('inactive');
-  }
+  menuContact.classList.add('active');
 });
 
 if (!localStorage.getItem('data')) {
