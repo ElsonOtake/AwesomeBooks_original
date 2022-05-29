@@ -12,7 +12,7 @@
 
 ## Live Demo (if available)
 
-[Live Demo Link](https://livedemo.com)
+[Live Demo Link](https://elsonotake.github.io/AwesomeBooks/)
 
 
 ## Getting Started
@@ -22,8 +22,6 @@ To get a local copy, follow these simple steps.
 ### Prerequisites
 
 In order to run this project on your computer, please make sure that you have a web browser installed
-
-### Prerequisites
 
 ### Setup
 
