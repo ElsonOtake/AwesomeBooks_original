@@ -28,4 +28,5 @@ export default class Books {
   restoreStorage() {
     this.books = JSON.parse(localStorage.getItem('classData'));
   }
+  
 }

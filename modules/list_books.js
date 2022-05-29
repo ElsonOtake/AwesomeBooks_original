@@ -1,7 +1,17 @@
-export default function dynamicLoad(awesome) {
+import { awesome } from "../index.js";
+import { DateTime } from './luxon.js';
+
+export default function dynamicLoad() {
   const body = document.querySelector('body');
   if (document.querySelector('.list')) {
     body.removeChild(document.querySelector('.list'));
+  }
+
+  const dateTime = document.querySelector('.date_time');
+  if (!dateTime.innerText) {
+    setInterval(() => {
+      dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+    }, 1000);
   }
 
   const list = document.createElement('div');
@@ -24,7 +34,7 @@ export default function dynamicLoad(awesome) {
     div.appendChild(button);
     list.appendChild(div);
   }
-  const dateTime = document.querySelector('.date_time');
+
   dateTime.insertAdjacentElement('afterend', list);
 
   const removeButton = document.querySelectorAll('.remove_btn');
@@ -34,13 +44,13 @@ export default function dynamicLoad(awesome) {
     const title = titleByAuthor.slice(1, titleByAuthor.lastIndexOf('" by '));
     const author = titleByAuthor.slice(titleByAuthor.lastIndexOf('" by ') + 5);
     awesome.remove(title, author);
-    dynamicLoad(awesome);
+    dynamicLoad();
   }));
 
   const menuList = document.querySelector('.menu_list');
 
   menuList.addEventListener('click', () => {
-    dynamicLoad(awesome);
+    dynamicLoad();
     menuList.classList.add('active');
     const addNew = document.querySelector('.add_new');
     addNew.classList.add('inactive');
