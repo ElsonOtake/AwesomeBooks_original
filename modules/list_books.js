@@ -1,6 +1,8 @@
-function dynamicLoad(awesome) {
+export default function dynamicLoad(awesome) {
   const body = document.querySelector('body');
-  (document.querySelector('.list')) && body.removeChild(document.querySelector('.list'));
+  if (document.querySelector('.list')) {
+    body.removeChild(document.querySelector('.list'));
+  }
 
   const list = document.createElement('div');
   list.className = 'list';
@@ -50,5 +52,3 @@ function dynamicLoad(awesome) {
     menuContact.classList.remove('active');
   });
 }
-
-export { dynamicLoad };

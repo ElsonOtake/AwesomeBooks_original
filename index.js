@@ -1,9 +1,8 @@
-import Books from "./modules/books.js";
-import { formStorage, populateStorage, populateNewForm } from "./modules/local_storage.js";
-import { dynamicLoad } from "./modules/list_books.js";
-import { DateTime } from "./modules/luxon.js";
+import Books from './modules/books.js';
+import { populateStorage, populateNewForm } from './modules/local_storage.js';
+import dynamicLoad from './modules/list_books.js';
+import { DateTime } from './modules/luxon.js';
 
-const body = document.querySelector('body');
 const dateTime = document.querySelector('.date_time');
 const menuList = document.querySelector('.menu_list');
 const addNew = document.querySelector('.add_new');
@@ -15,6 +14,10 @@ const contact = document.querySelector('.contact');
 const menuContact = document.querySelector('.menu_contact');
 
 const awesome = new Books();
+
+setInterval(() => {
+  dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+}, 1000);
 
 newBookBtn.addEventListener('click', () => {
   awesome.add(inputTitle.value, inputAuthor.value);
@@ -53,8 +56,8 @@ if (!localStorage.getItem('data')) {
   [inputTitle.value, inputAuthor.value] = populateNewForm();
 }
 
-(localStorage.getItem('classData')) && awesome.restoreStorage();
+if (localStorage.getItem('classData')) {
+  awesome.restoreStorage();
+}
 
 dynamicLoad(awesome);
-
-setInterval(() => dateTime.innerText = DateTime.now().toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS), 1000);

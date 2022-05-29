@@ -9,9 +9,7 @@ export default class Books {
   }
 
   remove(tit, aut) {
-    this.books = this.books.filter((book) => {
-      return ((book.title === tit) && (book.author === aut)) ? false : true;
-    });
+    this.books = this.books.filter((book) => (!(((book.title === tit) && (book.author === aut)))));
     localStorage.setItem('classData', JSON.stringify(this.books));
   }
 

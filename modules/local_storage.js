@@ -1,4 +1,4 @@
-export const formStorage = {
+const formStorage = {
   title: '',
   author: '',
 };
@@ -18,4 +18,3 @@ export function populateNewForm() {
   // inputTitle.value = storeData.title;
   // inputName.value = storeData.author;
 }
-
