@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css">
   <script type="module" src="index.js" defer></script>
-  <script type="module" src="modules/Books.js" defer></script>
+  <script type="module" src="modules/books.js" defer></script>
+  <script type="module" src="modules/local_storage.js" defer></script>
   <script type="module" src="modules/luxon.js" defer></script>
   <title>Document</title>
 </head>
+
 <body>
+
   <header>
     <p>Awesome books</p>
     <ul>
@@ -19,18 +23,16 @@
       <li class="menu_contact">Contact</li>
     </ul>
   </header>
-  <div class="date_time"></div>
 
-  <br>
+  <div class="date_time"></div>
 
   <form class="add_new inactive">
     <h2> Add a new book</h2>
     <input type="text" placeholder="Title" id="title" required>
-    <br><br>
-    <input type="text" placeholder="Author" id="name" required>
-    <br><br>
+    <input type="text" placeholder="Author" id="author" required>
     <button type="button" class="new_book_btn">Add</button>
   </form>
+
   <section class="contact inactive">
     <h2>Contact information</h2>
     <p>Do you have any questions or you just want to say "Hello"?<br>You can reach out to us!</p>
@@ -40,8 +42,10 @@
       <li>Our address: Leonardo da Vinci avenue, 317, São Paulo, Brazil</li>
     </ul>
   </section>
+
   <footer>
     <p>&copy; EAOrigami 2022</p>
   </footer>
 </body>
+
 </html>

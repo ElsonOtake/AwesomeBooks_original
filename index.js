@@ -1,4 +1,5 @@
-import Books from "./modules/Books.js";
+import Books from "./modules/books.js";
+import { formStorage, populateStorage, populateNewForm } from "./modules/local_storage.js";
 
 const body = document.querySelector('body');
 const dateTime = document.querySelector('.date_time');
@@ -6,24 +7,12 @@ const menuList = document.querySelector('.menu_list');
 const addNew = document.querySelector('.add_new');
 const menuAddNew = document.querySelector('.menu_add_new');
 const inputTitle = document.getElementById('title');
-const inputName = document.getElementById('name');
+const inputAuthor = document.getElementById('author');
 const newBookBtn = document.querySelector('.new_book_btn');
 const contact = document.querySelector('.contact');
 const menuContact = document.querySelector('.menu_contact');
 
-const formStorage = {
-  title: '',
-  author: '',
-};
-
 const awesome = new Books();
-
-function populateStorage() {
-  formStorage.title = inputTitle.value;
-  formStorage.author = inputName.value;
-  const storeData = JSON.stringify(formStorage);
-  localStorage.setItem('data', storeData);
-}
 
 function dynamicLoad() {
   (document.querySelector('.list')) && body.removeChild(document.querySelector('.list'));
@@ -70,21 +59,15 @@ function dynamicLoad() {
 }
 
 newBookBtn.addEventListener('click', () => {
-  awesome.add(inputTitle.value, inputName.value);
+  awesome.add(inputTitle.value, inputAuthor.value);
   inputTitle.value = '';
-  inputName.value = '';
-  populateStorage();
+  inputAuthor.value = '';
+  populateStorage(inputTitle.value, inputAuthor.value);
 });
 
-function populateNewForm() {
-  const storeData = JSON.parse(localStorage.getItem('data'));
-  inputTitle.value = storeData.title;
-  inputName.value = storeData.author;
-}
+inputTitle.addEventListener('input', () => populateStorage(inputTitle.value, inputAuthor.value));
 
-inputTitle.addEventListener('input', () => populateStorage());
-
-inputName.addEventListener('input', () => populateStorage());
+inputAuthor.addEventListener('input', () => populateStorage(inputTitle.value, inputAuthor.value));
 
 menuAddNew.addEventListener('click', () => {
   const list = document.querySelector('.list');
@@ -106,7 +89,11 @@ menuContact.addEventListener('click', () => {
   menuContact.classList.add('active');
 });
 
-(!localStorage.getItem('data')) ? populateStorage() : populateNewForm();
+if (!localStorage.getItem('data')) {
+  populateStorage(inputTitle.value, inputAuthor.value);
+} else {
+  [inputTitle.value, inputAuthor.value] = populateNewForm();
+}
 
 (localStorage.getItem('classData')) && awesome.restoreStorage();
 
