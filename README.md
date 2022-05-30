@@ -44,7 +44,7 @@ In order to run this project on your computer, please make sure that you have a 
 Once you completed these steps you should see the site in your browser.
 
 
-## Authors
+## Author
 
 👤 **Elson Otake**
 
