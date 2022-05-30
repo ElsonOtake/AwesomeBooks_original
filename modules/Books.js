@@ -4,7 +4,7 @@ export default class Books {
   }
 
   add(tit, aut) {
-    this.books.push({ title: tit, author: aut });
+    this.books = [...this.books, { title: tit, author: aut }];
     localStorage.setItem('classData', JSON.stringify(this.books));
   }
 
@@ -28,5 +28,4 @@ export default class Books {
   restoreStorage() {
     this.books = JSON.parse(localStorage.getItem('classData'));
   }
-  
 }
