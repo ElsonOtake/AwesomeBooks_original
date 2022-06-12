@@ -25,23 +25,29 @@ To get a local copy, follow these simple steps.
 
 ### Prerequisites
 
-In order to run this project on your computer, please make sure that you have a web browser installed
+Web browser installed
 
 ### Setup
 
- - Create a new folder;
- - Copy the index.html to this folder;
- - Copy the index.css to this folder;
- - Copy the index.js to this folder;
- - Create the modules folder in this folder;
- - Copy the books.js to the modules folder;
- - Copy the list_books.js to the modules folder;
- - Copy the local-storage.js to the modules folder;
- - Copy the luxon.js to the modules folder;
- - Copy the user_interface.js to the modules folder;
- - Double click on the index.html;
+Cloning a repository
 
-Once you completed these steps you should see the site in your browser.
+- On GitHub.com, navigate to the main page of the repository;
+
+- Above the list of files, click "Code" button;
+
+- Copy the URL to clone the repository. 
+
+  - To clone the repository using HTTPS : `https://github.com/ElsonOtake/AwesomeBooks_original.git`
+
+  - To clone the repository using an SSH key, including a certificate issued by your organization's SSH certificate authority : `git@github.com:ElsonOtake/AwesomeBooks_original.git`
+
+  - To clone a repository using GitHub CLI : `gh repo clone ElsonOtake/AwesomeBooks_original`
+
+- Open Terminal;
+
+- Change the current working directory to the location where you want the cloned directory;
+
+- Type `git clone`, and then paste the URL you copied earlier;
 
 
 ## Author
@@ -71,3 +77,8 @@ Give a ⭐️ if you like this project!
 
 - Microverse
 - W3Schools
+
+
+## 📝 License
+
+This project is [MIT](./MIT.md) licensed.
