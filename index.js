@@ -11,7 +11,7 @@ if (!localStorage.getItem('books')) {
   [inputTitle.value, inputAuthor.value] = populateNewForm();
 }
 
-if (localStorage.getItem('classData')) {
+if (localStorage.getItem('classBooks')) {
   awesome.restoreStorage();
 }
 
