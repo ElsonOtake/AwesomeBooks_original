@@ -1,7 +1,7 @@
-import Books from './modules/books.js';
 import { populateStorage, populateNewForm } from './modules/local_storage.js';
 import dynamicLoad from './modules/list_books.js';
 import { inputTitle, inputAuthor } from './modules/user_interface.js';
+import Books from './modules/books.js';
 
 const awesome = new Books();
 
